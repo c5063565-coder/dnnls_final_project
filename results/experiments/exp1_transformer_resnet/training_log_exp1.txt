@@ -1,0 +1,33 @@
+Experiment: transformer_resnet_nocontrast
+ Main Training
+Text encoder: Transformer
+Visual encoder: ResNet-18
+Contrastive loss : OFF
+Epochs: 15
+Batch size: 8
+LR: 0.001
+Trainable params : 24,170,078
+-------------------------------------------------------
+Epoch 1/15 | train=5.7586 | val=5.6340 | time=131.3s  <- best
+Epoch 2/15 | train=5.4789 | val=5.4120 | time=124.6s  <- best
+Epoch 3/15 | train=5.2544 | val=5.2265 | time=124.5s  <- best
+Epoch 4/15 | train=5.1002 | val=5.1421 | time=129.0s  <- best
+Epoch 5/15 | train=5.0169 | val=5.0739 | time=128.8s  <- best
+Epoch 6/15 | train=4.9453 | val=5.0143 | time=129.5s  <- best
+Epoch 7/15 | train=4.8919 | val=4.9868 | time=129.3s  <- best
+Epoch 8/15 | train=4.8608 | val=4.9609 | time=128.2s  <- best
+Epoch 9/15 | train=4.8302 | val=4.9366 | time=128.4s  <- best
+Epoch 10/15 | train=4.8066 | val=4.9242 | time=129.1s  <- best
+Epoch 11/15 | train=4.7938 | val=4.9129 | time=126.8s  <- best
+Epoch 12/15 | train=4.7796 | val=4.9018 | time=129.5s  <- best
+Epoch 13/15 | train=4.7685 | val=4.8964 | time=129.0s  <- best
+Epoch 14/15 | train=4.7617 | val=4.8911 | time=128.4s  <- best
+Epoch 15/15 | train=4.7550 | val=4.8861 | time=127.0s  <- best
+-------------------------------------------------------
+Best epoch: 15/15
+Best val loss: 4.8861
+Train initial: 5.7586
+Train final: 4.7550
+Val initial: 5.6340
+Val final: 4.8861
+Improvement: 13.3%

@@ -1,0 +1,25 @@
+Experiment: lstm_cnn_nocontrast
+External Dataset Pretraining
+Encoder: LSTM
+LR: 0.0003
+-------------------------------------------------------
+Stage B-TinyStories
+Epochs: 10
+Samples/epoch :500
+-------------------------------------------------------
+Epoch 1/10 | avg_loss=7.6134 | last_loss=7.0266 | time=1.4s
+Epoch 2/10 | avg_loss=6.9853 | last_loss=6.1133 | time=1.0s
+Epoch 3/10 | avg_loss=6.7120 | last_loss=7.9197 | time=1.1s
+Epoch 4/10 | avg_loss=6.5278 | last_loss=6.6832 | time=1.0s
+Epoch 5/10 | avg_loss=6.4844 | last_loss=5.9651 | time=0.9s
+Epoch 6/10 | avg_loss=6.3248 | last_loss=6.8472 | time=1.0s
+Epoch 7/10 | avg_loss=6.3019 | last_loss=6.1401 | time=1.0s
+Epoch 8/10 | avg_loss=6.2622 | last_loss=6.1403 | time=1.6s
+Epoch 9/10 | avg_loss=6.2400 | last_loss=5.8162 | time=1.3s
+Epoch 10/10 | avg_loss=6.2082 | last_loss=6.0639 | time=1.0s
+Stage B initial : 7.6134
+Stage B final: 6.2082
+
+-------------------------------------------------------
+TinyStories: 7.6134 → 6.2082
+StoryReasoning fine-tuning.
