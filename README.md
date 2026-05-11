@@ -104,5 +104,40 @@ Only the switches change between experiments — all hyperparameters remain fixe
 - Transformer only: Stage A on WikiText-2 (general English structure), then Stage B on TinyStories (short character-action stories — closest freely available domain to comic descriptions).
 - LSTM: Stage B on TinyStories only (already has provided pretrained weights; fine-tuned gently).
 
+<img src="results/experiments/baseline/cell12_external_pretraining_loss.png" width="700"/>
+<img src="results/experiments/exp1_transformer_resnet/cell12_external_pretraining_loss.png" width="700"/>
+<img src="results/experiments/exp2_contrastive/cell12_external_pretraining_loss.png" width="700"/>
+
+# StoryReasoning Text Fine-tuning
+
+- Both encoders are fine-tuned on StoryReasoning story descriptions. Best checkpoint is selected by validation loss. Text encoder is then frozen.
+  
+<img src="results/experiments/baseline/cell13_story_text_loss.png" width="700"/>
+<img src="results/experiments/exp1_transformer_resnet/cell13_story_text_loss.png" width="700"/>
+<img src="results/experiments/exp2_contrastive/cell13_story_text_loss.png" width="700"/>
+
+# Visual Encoder Pretraining
+- Stage A: STL-10 (5,000 images, 10 categories — similar visual diversity to story frames).
+- Stage B: StoryReasoning fine-tuning with dual loss (content reconstruction + context consistency). ResNet uses a lower learning rate than CNN to preserve ImageNet weights.
+
+<img src="results/experiments/baseline/cell14_visual_pretraining_loss.png" width="700"/>
+<img src="results/experiments/exp1_transformer_resnet/cell14_visual_pretraining_loss.png" width="700"/>
+<img src="results/experiments/exp2_contrastive/cell14_visual_pretraining_loss.png" width="700"/>
+
+
+---
+# Main Training 
+<img src="results/experiments/baseline/cell15_main_training_loss.png" width="700"/>
+<img src="results/experiments/exp1_transformer_resnet/cell15_main_training_loss.png" width="700"/>
+<img src="results/experiments/exp2_contrastive/cell15_main_training_loss.png" width="700"/>
+
+---
+# Explainability
+- Transformer attention heatmaps: Layer 1 self-attention weights visualised as a token × token matrix, showing which tokens the model attends to.
+- Grad-CAM: Gradient-weighted class activation maps overlaid on input frames, showing which image regions most influenced the ResNet visual encoding.
+- Prediction visualisation: Side-by-side of input frame, ground truth frame, and predicted frame, plus decoded predicted text vs ground truth description.
+
+---
+
 
 
