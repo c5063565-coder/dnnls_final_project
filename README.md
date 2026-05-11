@@ -156,9 +156,9 @@ Only the switches change between experiments — all hyperparameters remain fixe
 
 |Experiment| Text PT Loss |	Visual PT Loss|	Main Val Loss	|Improvement vs Baseline|
 |---|---|---|---|---|
-Exp 1  Baseline (LSTM + CNN)	|???|	???|	???|	—|
-Exp 2 (Transformer + ResNet)	|???	|???	|???	|???%|
-Exp 3 (+ Contrastive)	|???|	???|	???|	???%|
+Exp 1  Baseline (LSTM + CNN)	|6.2082|0.1427|4.2394|	—|
+Exp 2 (Transformer + ResNet)	|6.3559|0.1535|4.8861|13.3%|
+Exp 3 (+ Contrastive)	|6.4121|0.1541|4.9408|12.2%|
 
 ---
 
