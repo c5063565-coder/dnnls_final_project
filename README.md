@@ -133,11 +133,51 @@ Only the switches change between experiments — all hyperparameters remain fixe
 
 ---
 # Explainability
-- Transformer attention heatmaps: Layer 1 self-attention weights visualised as a token × token matrix, showing which tokens the model attends to.
-- Grad-CAM: Gradient-weighted class activation maps overlaid on input frames, showing which image regions most influenced the ResNet visual encoding.
-- Prediction visualisation: Side-by-side of input frame, ground truth frame, and predicted frame, plus decoded predicted text vs ground truth description.
+
+- **Transformer attention heatmaps:** Layer 1 self-attention weights visualised as a token × token matrix, showing which tokens the model attends to.
+  
+<img src="results/experiments/exp1_transformer_resnet/attention_heatmap_sample3.png" width="700"/>
+
+-  Sample 1 text : under the bright blue sky of los angeles, alex walked along the bustli...
+-  Saved : attention_heatmap_sample3.png
+
+
+- **Grad-CAM:**  Gradient-weighted class activation maps overlaid on input frames, showing which image regions most influenced the ResNet visual encoding.
+
+<img src="results/experiments/exp1_transformer_resnet/gradcam_sample3.png" width="700"/>
+
+- **Prediction visualisation:** Side-by-side of input frame, ground truth frame, and predicted frame, plus decoded predicted text vs ground truth description.
+  
+<img src="results/experiments/exp1_transformer_resnet/prediction_sample3.png" width="700"/>
 
 ---
 
+# Results
 
+|Experiment| Text PT Loss |	Visual PT Loss|	Main Val Loss	|Improvement vs Baseline|
+|---|---|---|---|---|
+Exp 1  Baseline (LSTM + CNN)	|???|	???|	???|	—|
+Exp 2 (Transformer + ResNet)	|???	|???	|???	|???%|
+Exp 3 (+ Contrastive)	|???|	???|	???|	???%|
 
+---
+
+# Requirements
+
+- PyTorch
+- torchvision
+- transformers
+- datasets (HuggingFace)
+- BeautifulSoup4
+- matplotlib, numpy
+- Google Colab (for Drive mounting and GPU)
+---
+
+# How to Run
+
+- Open the notebook in Google Colab.
+- Mount Google Drive (Cell 2).
+- Set experiment switches in Cell 3.
+- To switch experiments, return to Cell 3, change the switches, and re-run.
+
+---
