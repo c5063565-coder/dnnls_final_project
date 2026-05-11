@@ -178,7 +178,7 @@ If no valid ROI pair exists in a batch, both losses are skipped (zero).
 <img src="results/experiments/exp1_transformer_resnet/prediction_sample3.png" width="700"/>
 
 - **GT text** : as alex continued his investigation, he found himself in an indoor setting, the
-- -**Pred text**: alex stood to feet, and knew himself in the air room, the wall was a lit room
+- **Pred text**: alex stood to feet, and knew himself in the air room, the wall was a lit room
 - **Saved** : prediction_sample3.png
 ---
 # Ablation: Transformer Encoder Depth
