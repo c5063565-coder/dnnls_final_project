@@ -151,12 +151,20 @@ Only the switches change between experiments — all hyperparameters remain fixe
 <img src="results/experiments/exp1_transformer_resnet/prediction_sample3.png" width="700"/>
 
 ---
+# Ablation: Transformer Encoder Depth
 
+
+| Model| 	Parameters | 	Best Text Val Loss	| Best Main Val Loss|
+|---|---|---|---|
+LSTM Baseline|	2.0M|	4.2010|	4.2394|
+Transformer 2-layer|	24.1M|	5.7463|	4.8861|
+
+---
 # Results
 
-|Experiment| Text PT Loss |	Visual PT Loss|	Main Val Loss	|Improvement vs Baseline|
+|Experiment| Text PT Loss |	Visual PT Loss|	Main Val Loss	|Improvement|
 |---|---|---|---|---|
-Exp 1  Baseline (LSTM + CNN)	|6.2082|0.1427|4.2394|	—|
+Exp 1  Baseline (LSTM + CNN)	|6.2082|0.1427|4.2394|1.8%|
 Exp 2 (Transformer + ResNet)	|6.3559|0.1535|4.8861|13.3%|
 Exp 3 (+ Contrastive)	|6.4121|0.1541|4.9408|12.2%|
 
