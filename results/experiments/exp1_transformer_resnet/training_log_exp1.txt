@@ -1,5 +1,209 @@
+External Dataset Pretraining (Text)
+=======================================================
+Encoder: Transformer
 Experiment: transformer_resnet_nocontrast
- Main Training
+
+Parameters unfrozen: 1,504,586
+
+Stage A: WikiText-2 Pretraining (Transformer only)
+───────────────────────────────────────────────────────
+Wikipedia text-teaches general English structure.
+
+README.md: 
+ 10.5k/? [00:00<00:00, 1.00MB/s]
+wikitext-2-raw-v1/test-00000-of-00001.pa(…): 100%
+ 733k/733k [00:00<00:00, 1.91MB/s]
+wikitext-2-raw-v1/train-00000-of-00001.p(…): 100%
+ 6.36M/6.36M [00:00<00:00, 31.7MB/s]
+wikitext-2-raw-v1/validation-00000-of-00(…): 100%
+ 657k/657k [00:00<00:00, 2.65MB/s]
+Generating test split: 100%
+ 4358/4358 [00:00<00:00, 151531.39 examples/s]
+Generating train split: 100%
+ 36718/36718 [00:00<00:00, 479255.80 examples/s]
+Generating validation split: 100%
+ 3760/3760 [00:00<00:00, 135972.06 examples/s]
+WikiText-2 sentences: 18,265
+
+Epoch 1/3 | avg_loss=9.6095 | last_loss=8.2603 | time=2.6s
+Checkpoint saved: checkpoints/text_wiki_epoch1.pth
+Epoch 2/3 | avg_loss=7.6693 | last_loss=7.6545 | time=1.8s
+Checkpoint saved: checkpoints/text_wiki_epoch2.pth
+Epoch 3/3 | avg_loss=7.3331 | last_loss=7.6331 | time=1.5s
+Checkpoint saved: checkpoints/text_wiki_epoch3.pth
+
+Stage A complete.
+9.6095 → 7.3331
+
+Stage B: TinyStories Pretraining (ALL encoders)
+───────────────────────────────────────────────────────
+Loading TinyStories
+README.md: 
+ 1.06k/? [00:00<00:00, 83.8kB/s]
+data/train-00000-of-00004-2d5a1467fff108(…): 100%
+ 249M/249M [00:03<00:00, 117MB/s]
+data/train-00001-of-00004-5852b56a2bd28f(…): 100%
+ 248M/248M [00:01<00:00, 213MB/s]
+data/train-00002-of-00004-a26307300439e9(…): 100%
+ 246M/246M [00:01<00:00, 1.22GB/s]
+data/train-00003-of-00004-d243063613e5a0(…): 100%
+ 248M/248M [00:03<00:00, 80.5MB/s]
+data/validation-00000-of-00001-869c898b5(…): 100%
+ 9.99M/9.99M [00:00<00:00, 50.0MB/s]
+Generating train split: 100%
+ 2119719/2119719 [00:23<00:00, 108017.95 examples/s]
+Generating validation split: 100%
+ 21990/21990 [00:00<00:00, 160482.10 examples/s]
+TinyStories sentences extracted: 50,005
+
+Training 10 epochs x 500 samples...
+
+Epoch 1/10 | avg_loss=7.0511 | last_loss=6.8580 | time=1.6s
+Checkpoint saved: checkpoints/text_tiny_epoch1_transformer.pth
+Epoch 2/10 | avg_loss=6.7542 | last_loss=6.3745 | time=1.6s
+Checkpoint saved: checkpoints/text_tiny_epoch2_transformer.pth
+Epoch 3/10 | avg_loss=6.6074 | last_loss=6.4766 | time=1.5s
+Checkpoint saved: checkpoints/text_tiny_epoch3_transformer.pth
+Epoch 4/10 | avg_loss=6.4852 | last_loss=6.7804 | time=1.2s
+Checkpoint saved: checkpoints/text_tiny_epoch4_transformer.pth
+Epoch 5/10 | avg_loss=6.4759 | last_loss=6.7301 | time=1.3s
+Checkpoint saved: checkpoints/text_tiny_epoch5_transformer.pth
+Epoch 6/10 | avg_loss=6.4762 | last_loss=6.3539 | time=1.3s
+Checkpoint saved: checkpoints/text_tiny_epoch6_transformer.pth
+Epoch 7/10 | avg_loss=6.4003 | last_loss=5.9899 | time=1.3s
+Checkpoint saved: checkpoints/text_tiny_epoch7_transformer.pth
+Epoch 8/10 | avg_loss=6.4189 | last_loss=6.2850 | time=1.3s
+Checkpoint saved: checkpoints/text_tiny_epoch8_transformer.pth
+Epoch 9/10 | avg_loss=6.4021 | last_loss=5.9156 | time=1.5s
+Checkpoint saved: checkpoints/text_tiny_epoch9_transformer.pth
+Epoch 10/10 | avg_loss=6.3559 | last_loss=6.4003 | time=1.5s
+Checkpoint saved: checkpoints/text_tiny_epoch10_transformer.pth
+
+Stage B complete.
+7.0511 → 6.3559
+Figure saved → experiments/exp1/cell12_external_pretraining_loss.png
+===========================
+StoryReasoning Text Fine-tuning
+=======================================================
+Encoder: Transformer
+Experiment: transformer_resnet_nocontrast
+
+Transfer learning final stage:
+Adapts text encoder to exact story description domain.
+Trainable parameters : 1,504,586
+
+Loaded existing log appending.
+Text train samples: 3,197
+Text val samples: 355
+
+Fine-tuning for 10 epochs...
+
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 1/10 | train=6.5848 | val=6.2542 | time=80.2s  ← best
+Checkpoint saved: checkpoints/text_story_epoch1_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 2/10 | train=6.1008 | val=5.9927 | time=91.3s  ← best
+Checkpoint saved: checkpoints/text_story_epoch2_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 3/10 | train=5.9454 | val=5.9358 | time=81.0s  ← best
+Checkpoint saved: checkpoints/text_story_epoch3_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 4/10 | train=5.8628 | val=5.8976 | time=74.7s  ← best
+Checkpoint saved: checkpoints/text_story_epoch4_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 5/10 | train=5.8102 | val=5.8303 | time=77.1s  ← best
+Checkpoint saved: checkpoints/text_story_epoch5_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 6/10 | train=5.7837 | val=5.7897 | time=75.7s  ← best
+Checkpoint saved: checkpoints/text_story_epoch6_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 7/10 | train=5.7604 | val=5.7792 | time=75.1s  ← best
+Checkpoint saved: checkpoints/text_story_epoch7_transformer.pth
+Epoch 8/10 | train=5.7420 | val=5.7810 | time=75.7s
+Checkpoint saved: checkpoints/text_story_epoch8_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 9/10 | train=5.7260 | val=5.7655 | time=77.5s  ← best
+Checkpoint saved: checkpoints/text_story_epoch9_transformer.pth
+Checkpoint saved: checkpoints/text_story_best_transformer.pth
+Epoch 10/10 | train=5.7246 | val=5.7463 | time=77.7s  ← best
+Checkpoint saved: checkpoints/text_story_epoch10_transformer.pth
+
+Loading best checkpoint (epoch 10, val=5.7463)
+Loaded: text_story_best_transformer.pth  (epoch 10)
+Figure saved → experiments/exp1/cell13_story_text_loss.png
+
+----------------------------------------------------------------------
+Visual Encoder Pretraining
+=======================================================
+Visual encoder: ResNet-18
+Experiment: transformer_resnet_nocontrast
+
+Learning rate  : 0.0003
+(lower for ResNet to preserve ImageNet weights)
+
+Stage A: STL-10 External Pretraining
+───────────────────────────────────────────────────────
+STL-10: 5000 images across 10 object categories.
+100%|██████████| 2.64G/2.64G [03:14<00:00, 13.5MB/s]
+STL-10 loaded: 5,000 images
+Categories: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
+
+Training 10 epochs (capped at 200 batches/epoch)...
+
+Epoch 1/10 | avg_loss=0.2281 | last_loss=0.1953 | time=8.9s
+Checkpoint saved: checkpoints/visual_stl_epoch1_resnet.pth
+Epoch 2/10 | avg_loss=0.1944 | last_loss=0.1800 | time=7.9s
+Checkpoint saved: checkpoints/visual_stl_epoch2_resnet.pth
+Epoch 3/10 | avg_loss=0.1716 | last_loss=0.1626 | time=9.0s
+Checkpoint saved: checkpoints/visual_stl_epoch3_resnet.pth
+Epoch 4/10 | avg_loss=0.1635 | last_loss=0.1453 | time=9.8s
+Checkpoint saved: checkpoints/visual_stl_epoch4_resnet.pth
+Epoch 5/10 | avg_loss=0.1585 | last_loss=0.1237 | time=8.3s
+Checkpoint saved: checkpoints/visual_stl_epoch5_resnet.pth
+Epoch 6/10 | avg_loss=0.1537 | last_loss=0.1702 | time=8.6s
+Checkpoint saved: checkpoints/visual_stl_epoch6_resnet.pth
+Epoch 7/10 | avg_loss=0.1551 | last_loss=0.1383 | time=8.5s
+Checkpoint saved: checkpoints/visual_stl_epoch7_resnet.pth
+Epoch 8/10 | avg_loss=0.1524 | last_loss=0.1548 | time=8.9s
+Checkpoint saved: checkpoints/visual_stl_epoch8_resnet.pth
+Epoch 9/10 | avg_loss=0.1504 | last_loss=0.1716 | time=8.3s
+Checkpoint saved: checkpoints/visual_stl_epoch9_resnet.pth
+Epoch 10/10 | avg_loss=0.1501 | last_loss=0.1626 | time=8.6s
+Checkpoint saved: checkpoints/visual_stl_epoch10_resnet.pth
+
+Stage A complete.
+0.2281 → 0.1501
+
+Stage B: StoryReasoning Visual Fine-tuning
+───────────────────────────────────────────────────────
+Fine-tunes on actual story frames.
+Dual loss: content reconstruction + context consistency.
+
+Fine-tuning 5 epochs on StoryReasoning 
+
+Checkpoint saved: checkpoints/visual_story_best_resnet.pth
+Epoch 1/5 | avg_loss=0.1675 | last_loss=0.1451 | time=50.2s<- best
+Checkpoint saved: checkpoints/visual_story_epoch1_resnet.pth
+Checkpoint saved: checkpoints/visual_story_best_resnet.pth
+Epoch 2/5 | avg_loss=0.1609 | last_loss=0.1314 | time=48.6s<- best
+Checkpoint saved: checkpoints/visual_story_epoch2_resnet.pth
+Checkpoint saved: checkpoints/visual_story_best_resnet.pth
+Epoch 3/5 | avg_loss=0.1576 | last_loss=0.1422 | time=53.0s<- best
+Checkpoint saved: checkpoints/visual_story_epoch3_resnet.pth
+Checkpoint saved: checkpoints/visual_story_best_resnet.pth
+Epoch 4/5 | avg_loss=0.1538 | last_loss=0.1423 | time=53.4s<- best
+Checkpoint saved: checkpoints/visual_story_epoch4_resnet.pth
+Checkpoint saved: checkpoints/visual_story_best_resnet.pth
+Epoch 5/5 | avg_loss=0.1535 | last_loss=0.1297 | time=54.0s<- best
+Checkpoint saved: checkpoints/visual_story_epoch5_resnet.pth
+
+Loading best checkpoint (epoch 5, loss=0.1535)
+Loaded: visual_story_best_resnet.pth  (epoch 5)
+Figure saved → experiments/exp1/cell14_visual_pretraining_loss.png
+
+----------------------------------------------------------------------------
+Experiment: transformer_resnet_nocontrast
+Main Training
 Text encoder: Transformer
 Visual encoder: ResNet-18
 Contrastive loss : OFF
