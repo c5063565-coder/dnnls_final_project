@@ -1,4 +1,4 @@
-# dnnls_final_project
+# Multimodal Grounded Sequence Prediction Project
 
 A deep learning project that predicts the next frame in a comic-style story sequence using both image and text inputs. Three experiments are compared using the StoryReasoning dataset.
 
@@ -128,7 +128,34 @@ Only the switches change between experiments — all hyperparameters remain fixe
 ---
 # Main Training 
 <img src="results/experiments/baseline/cell15_main_training_loss.png" width="700"/>
+
+---
+# Shared Latent Space
+
+-All encoders project into a latent dimension of 16. The dual-pathway visual encoder concatenates a content embedding and a context embedding (each 16-d), then projects back to 16-d via a linear layer.
+
+# Temporal GRU + Attention
+
+- Input: sequence of 4 fused frame embeddings (image 16-d + text 16-d = 32-d per frame)
+- GRU hidden size: 16
+- Attention: a single linear layer scores each GRU timestep; softmax weights are used
+  to compute a context vector
+- Final fused vector: projection of [GRU last hidden state || attention context] → 16-d
+- This fused vector initialises both the image decoder and the LSTM text decoder (h0, c0)
 <img src="results/experiments/exp1_transformer_resnet/cell15_main_training_loss.png" width="700"/>
+
+# Contrastive ROI Loss
+
+- The CoT annotations provide bounding boxes for characters and objects across frames.When the same entity (e.g. "Character A") appears in two different context frames,their ResNet ROI crops are extracted and encoded.
+
+Two losses are added:
+- **Re-ID loss** (`LAMBDA_REID = 0.10`): MSE between the two ROI embeddings, pulling
+  the same entity's representations together.
+- **Contrastive loss** (`LAMBDA_CONTRAST = 0.10`, τ = 0.07): InfoNCE between the ROI
+  embedding and the corresponding text frame embedding, aligning visual and textual
+  representations of the same entity.
+
+If no valid ROI pair exists in a batch, both losses are skipped (zero).
 <img src="results/experiments/exp2_contrastive/cell15_main_training_loss.png" width="700"/>
 
 ---
@@ -150,6 +177,9 @@ Only the switches change between experiments — all hyperparameters remain fixe
   
 <img src="results/experiments/exp1_transformer_resnet/prediction_sample3.png" width="700"/>
 
+- **GT text** : as alex continued his investigation, he found himself in an indoor setting, the
+- -**Pred text**: alex stood to feet, and knew himself in the air room, the wall was a lit room
+- **Saved** : prediction_sample3.png
 ---
 # Ablation: Transformer Encoder Depth
 
@@ -159,15 +189,32 @@ Only the switches change between experiments — all hyperparameters remain fixe
 LSTM Baseline|	2.0M|	4.2010|	4.2394|
 Transformer 2-layer|	24.1M|	5.7463|	4.8861|
 
+- The ablation isolates the effect of encoder depth on the text autoencoder.
+- The 2-layer Transformer has ~12× more parameters than the LSTM baseline (24.1M vs 2.0M),
+yet achieves a higher text val loss (5.75 vs 4.20). This is expected: the Transformer
+trains from scratch on limited story data, while the LSTM was initialised from pretrained
+weights. The Transformer's advantage appears in downstream main training generalisation
+rather than standalone text reconstruction loss.
 ---
 # Results
 
 |Experiment| Text PT Loss |	Visual PT Loss|	Main Val Loss	|Improvement|
 |---|---|---|---|---|
-Exp 1  Baseline (LSTM + CNN)	|6.2082|0.1427|4.2394|1.8%|
-Exp 2 (Transformer + ResNet)	|6.3559|0.1535|4.8861|13.3%|
-Exp 3 (+ Contrastive)	|6.4121|0.1541|4.9408|12.2%|
+Baseline (LSTM + CNN)	|6.2082|0.1427|4.2394|1.8%|
+Exp 1 (Transformer + ResNet)	|6.3559|0.1535|4.8861|13.3%|
+Exp 2 (+ Contrastive)	|6.4121|0.1541|4.9408|12.2%|
 
+
+**Key observations:**
+- The Baseline achieves the lowest absolute val loss (4.24), but this is partly because
+  the LSTM text encoder was initialised from pretrained weights, giving it a head start.
+- Exp 1 shows a 13.3% improvement over its own starting loss, demonstrating that the
+  Transformer + ResNet combination learns more effectively across epochs.
+- Exp 2 shows a slightly lower improvement than Exp 1 (12.2%), suggesting the contrastive
+  loss adds useful grounding signal but also increases training difficulty, requiring more
+  epochs to converge fully.
+- Higher text pretraining loss in Exp 1/2 reflects the harder task of training the
+  Transformer from scratch vs. loading pretrained LSTM weights.
 ---
 
 # Requirements
@@ -187,5 +234,10 @@ Exp 3 (+ Contrastive)	|6.4121|0.1541|4.9408|12.2%|
 - Mount Google Drive (Cell 2).
 - Set experiment switches in Cell 3.
 - To switch experiments, return to Cell 3, change the switches, and re-run.
-
+ 
+| Target experiment | USE_TRANSFORMER_ENCODER | USE_RESNET_ENCODER | USE_CONTRASTIVE_ROI |
+|---|---|---|---|
+| Baseline | false | false | false |
+| Exp 1 | true | true | false |
+| Exp 2 | true | true | true |
 ---
