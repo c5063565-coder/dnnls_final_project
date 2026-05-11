@@ -23,3 +23,156 @@ Stage B final: 6.2082
 -------------------------------------------------------
 TinyStories: 7.6134 → 6.2082
 StoryReasoning fine-tuning.
+=======================================================
+Encoder: LSTM
+Experiment: lstm_cnn_nocontrast
+
+Transfer learning final stage:
+Adapts text encoder to exact story description domain.
+Trainable parameters : 1,499,930
+
+Loaded existing log appending.
+Text train samples: 3,197
+Text val samples: 355
+
+Fine-tuning for 10 epochs...
+
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 1/10 | train=4.3433 | val=4.2845 | time=78.5s  ← best
+Checkpoint saved: checkpoints/text_story_epoch1_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 2/10 | train=4.2040 | val=4.2373 | time=72.5s  ← best
+Checkpoint saved: checkpoints/text_story_epoch2_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 3/10 | train=4.2059 | val=4.2254 | time=73.4s  ← best
+Checkpoint saved: checkpoints/text_story_epoch3_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 4/10 | train=4.1761 | val=4.2230 | time=73.6s  ← best
+Checkpoint saved: checkpoints/text_story_epoch4_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 5/10 | train=4.1828 | val=4.2108 | time=73.3s  ← best
+Checkpoint saved: checkpoints/text_story_epoch5_lstm.pth
+Epoch 6/10 | train=4.1787 | val=4.2198 | time=73.4s
+Checkpoint saved: checkpoints/text_story_epoch6_lstm.pth
+Epoch 7/10 | train=4.1599 | val=4.2127 | time=72.9s
+Checkpoint saved: checkpoints/text_story_epoch7_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 8/10 | train=4.1790 | val=4.2100 | time=73.8s  ← best
+Checkpoint saved: checkpoints/text_story_epoch8_lstm.pth
+Checkpoint saved: checkpoints/text_story_best_lstm.pth
+Epoch 9/10 | train=4.1711 | val=4.2010 | time=73.9s  ← best
+Checkpoint saved: checkpoints/text_story_epoch9_lstm.pth
+Epoch 10/10 | train=4.1796 | val=4.2421 | time=74.5s
+Checkpoint saved: checkpoints/text_story_epoch10_lstm.pth
+
+Loading best checkpoint (epoch 9, val=4.2010)
+Log saved → experiments/baseline/training_log_baseline.txt
+Best epoch: 9/10
+Best val loss: 4.2010
+Train: 4.3433 → 4.1796
+Val: 4.2845 → 4.2421
+--------------------------------------------------------------------
+Visual Encoder Pretraining
+=======================================================
+Visual encoder: CNN baseline
+Experiment: lstm_cnn_nocontrast
+
+Learning rate  : 0.0005
+(higher for CNN training from scratch)
+
+Stage A: STL-10 External Pretraining
+───────────────────────────────────────────────────────
+STL-10: 5000 images across 10 object categories.
+100%|██████████| 2.64G/2.64G [01:02<00:00, 42.0MB/s]
+STL-10 loaded: 5,000 images
+Categories: ['airplane', 'bird', 'car', 'cat', 'deer', 'dog', 'horse', 'monkey', 'ship', 'truck']
+
+Training 10 epochs (capped at 200 batches/epoch)...
+
+Epoch 1/10 | avg_loss=0.2182 | last_loss=0.1844 | time=3.4s
+Checkpoint saved: checkpoints/visual_stl_epoch1_cnn.pth
+Epoch 2/10 | avg_loss=0.1819 | last_loss=0.1723 | time=3.5s
+Checkpoint saved: checkpoints/visual_stl_epoch2_cnn.pth
+Epoch 3/10 | avg_loss=0.1616 | last_loss=0.1453 | time=2.8s
+Checkpoint saved: checkpoints/visual_stl_epoch3_cnn.pth
+Epoch 4/10 | avg_loss=0.1470 | last_loss=0.1398 | time=2.6s
+Checkpoint saved: checkpoints/visual_stl_epoch4_cnn.pth
+Epoch 5/10 | avg_loss=0.1383 | last_loss=0.1285 | time=2.7s
+Checkpoint saved: checkpoints/visual_stl_epoch5_cnn.pth
+Epoch 6/10 | avg_loss=0.1349 | last_loss=0.1625 | time=4.2s
+Checkpoint saved: checkpoints/visual_stl_epoch6_cnn.pth
+Epoch 7/10 | avg_loss=0.1330 | last_loss=0.1563 | time=2.6s
+Checkpoint saved: checkpoints/visual_stl_epoch7_cnn.pth
+Epoch 8/10 | avg_loss=0.1334 | last_loss=0.1138 | time=2.6s
+Checkpoint saved: checkpoints/visual_stl_epoch8_cnn.pth
+Epoch 9/10 | avg_loss=0.1329 | last_loss=0.1323 | time=2.8s
+Checkpoint saved: checkpoints/visual_stl_epoch9_cnn.pth
+Epoch 10/10 | avg_loss=0.1315 | last_loss=0.1400 | time=3.5s
+Checkpoint saved: checkpoints/visual_stl_epoch10_cnn.pth
+
+Stage A complete.
+0.2182 → 0.1315
+
+Stage B: StoryReasoning Visual Fine-tuning
+───────────────────────────────────────────────────────
+Fine-tunes on actual story frames.
+Dual loss: content reconstruction + context consistency.
+
+Fine-tuning 5 epochs on StoryReasoning 
+
+Checkpoint saved: checkpoints/visual_story_best_cnn.pth
+Epoch 1/5 | avg_loss=0.1500 | last_loss=0.1495 | time=40.4s<- best
+Checkpoint saved: checkpoints/visual_story_epoch1_cnn.pth
+Checkpoint saved: checkpoints/visual_story_best_cnn.pth
+Epoch 2/5 | avg_loss=0.1458 | last_loss=0.1508 | time=36.7s<- best
+Checkpoint saved: checkpoints/visual_story_epoch2_cnn.pth
+Checkpoint saved: checkpoints/visual_story_best_cnn.pth
+Epoch 3/5 | avg_loss=0.1449 | last_loss=0.1651 | time=38.3s<- best
+Checkpoint saved: checkpoints/visual_story_epoch3_cnn.pth
+Checkpoint saved: checkpoints/visual_story_best_cnn.pth
+Epoch 4/5 | avg_loss=0.1443 | last_loss=0.1494 | time=38.1s<- best
+Checkpoint saved: checkpoints/visual_story_epoch4_cnn.pth
+Checkpoint saved: checkpoints/visual_story_best_cnn.pth
+Epoch 5/5 | avg_loss=0.1427 | last_loss=0.1021 | time=36.9s<- best
+Checkpoint saved: checkpoints/visual_story_epoch5_cnn.pth
+
+Loading best checkpoint (epoch 5, loss=0.1427)
+Loaded: visual_story_best_cnn.pth  (epoch 5)
+Figure saved → experiments/baseline/cell14_visual_pretraining_loss.png
+STL-10: 0.2182 → 0.1315
+StoryReasoning: 0.1500 → 0.1427
+Best epoch: 5/5
+--------------------------------------------------------------------
+Experiment: lstm_cnn_nocontrast
+Main Training
+Text encoder: LSTM
+Visual encoder: CNN
+Contrastive loss : OFF
+Epochs: 15
+Batch size: 8
+LR: 0.001
+Trainable params : 2,006,958
+-------------------------------------------------------
+Epoch 1/15 | train=4.3298 | val=4.3152 | time=113.6s  <- best
+Epoch 2/15 | train=4.2560 | val=4.2940 | time=111.0s  <- best
+Epoch 3/15 | train=4.2169 | val=4.2771 | time=107.3s  <- best
+Epoch 4/15 | train=4.1821 | val=4.2695 | time=108.9s  <- best
+Epoch 5/15 | train=4.1660 | val=4.2616 | time=106.6s  <- best
+Epoch 6/15 | train=4.1501 | val=4.2549 | time=109.1s  <- best
+Epoch 7/15 | train=4.1351 | val=4.2510 | time=107.2s  <- best
+Epoch 8/15 | train=4.1280 | val=4.2486 | time=110.6s  <- best
+Epoch 9/15 | train=4.1223 | val=4.2454 | time=112.2s  <- best
+Epoch 10/15 | train=4.1133 | val=4.2440 | time=114.5s  <- best
+Epoch 11/15 | train=4.1099 | val=4.2424 | time=113.3s  <- best
+Epoch 12/15 | train=4.1063 | val=4.2415 | time=110.5s  <- best
+Epoch 13/15 | train=4.1026 | val=4.2406 | time=110.0s  <- best
+Epoch 14/15 | train=4.1009 | val=4.2400 | time=110.4s  <- best
+Epoch 15/15 | train=4.0993 | val=4.2394 | time=107.3s  <- best
+-------------------------------------------------------
+Best epoch: 15/15
+Best val loss: 4.2394
+Train initial: 4.3298
+Train final: 4.0993
+Val initial: 4.3152
+Val final: 4.2394
+Improvement: 1.8%
