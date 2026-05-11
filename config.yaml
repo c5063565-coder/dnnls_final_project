@@ -1,0 +1,106 @@
+paths:
+  base_folder: /content/gdrive/MyDrive/DNN/DL_Checkpoints
+  stl10_root: /content/data
+  folders:
+    base: /content/gdrive/MyDrive/DNN/DL_Checkpoints
+    checkpoints: /content/gdrive/MyDrive/DNN/DL_Checkpoints/checkpoints
+    baseline: /content/gdrive/MyDrive/DNN/DL_Checkpoints/experiments/baseline
+    exp1: /content/gdrive/MyDrive/DNN/DL_Checkpoints/experiments/exp1_transformer_resnet
+    exp2: /content/gdrive/MyDrive/DNN/DL_Checkpoints/experiments/exp2_contrastive
+    
+model:
+  emb_dim: 16
+  latent_dim: 16
+  num_layers: 1
+  dropout: 0.1
+  transformer:
+    num_layers: 2
+    nhead: 4
+  image:
+    height: 60
+    width: 125
+    
+experiment:
+  use_transformer_encoder: true
+  use_resnet_encoder: true
+  use_contrastive_roi: true
+  use_frame_aware_grounding: false
+  use_entity_pooling: false
+  use_cot_text: false
+
+training:
+  n_epochs: 15
+  batch_size: 8
+  lr: 0.001
+  max_len: 120
+  scheduler:
+    step_size: 3
+    gamma: 0.5
+
+loss:
+  lambda_contrast: 0.10
+  lambda_ground_mse: 0.10
+  lambda_reid: 0.10
+  lambda_entity_pool: 0.05
+  contrastive_tau: 0.07
+
+
+text_pretrain_external:
+  lr_transformer: 0.001
+  lr_lstm: 0.0003
+  scheduler:
+    step_size: 2
+    gamma: 0.5
+  wikitext:                        # Transformer only
+    n_epochs: 3
+    samples_per_epoch: 500
+    batch_size: 4
+  tinystories:                     # All encoders
+    n_epochs: 10
+    samples_per_epoch: 500
+    batch_size: 4
+    max_sentences: 50000
+    min_sentence_len: 20
+    min_story_len: 30
+
+text_finetune_story:
+  n_epochs: 10
+  batch_size: 4
+  lr_transformer: 0.0003
+  lr_lstm: 0.0001
+  val_split: 0.1
+  random_seed: 42
+  scheduler:
+    step_size: 2
+    gamma: 0.5
+
+
+visual_pretrain:
+  lr_resnet: 0.0003
+  lr_cnn: 0.0005
+  finetune_lr_factor: 0.5          # finetune_lr = base_lr * factor
+  scheduler:
+    step_size: 2
+    gamma: 0.5
+  stl10:
+    n_epochs: 10
+    max_batches_per_epoch: 200
+  story_finetune:
+    n_epochs: 5
+    context_loss_weight: 0.5       # loss = content + weight * context
+
+
+datasets:
+  story_reasoning: daniel3303/StoryReasoning
+  wikitext: wikitext-2-raw-v1
+  tinystories: roneneldan/TinyStories
+  tokenizer: google-bert/bert-base-uncased
+  sequence_length: 4               
+
+
+explainability:
+  sample_idxs: [3]
+  gradcam_overlay_alpha: 0.4
+  gradcam_input_alpha: 0.6
+  attention_max_tokens: 20
+  cot_max_chars: 600
